@@ -21,7 +21,7 @@ class OrderService {
       const productsIds = products.map((product) => product.id);
       return { id, userId, productsIds };
     });
-    return result;
+    return Promise.all(result);
   }
 }
 
