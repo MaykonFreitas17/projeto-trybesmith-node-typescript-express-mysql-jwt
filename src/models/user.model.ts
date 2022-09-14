@@ -10,7 +10,7 @@ class UserModel {
 
   public async login(username: string, password: string): Promise<User> {
     const result = await this.connection.execute(
-      'SELECT * FROM users WHERE username=? AND password=?',
+      'SELECT * FROM Trybesmith.Users WHERE username=? AND password=?',
       [username, password],
     );
     const [rows] = result;
