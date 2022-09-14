@@ -18,10 +18,12 @@ class OrderModel {
 
   public async create(order: Order) {
     const { userId } = order;
-    await this.connection.execute<ResultSetHeader>(
+    const [dataInsert] = await this.connection.execute<ResultSetHeader>(
       'INSERT INTO Trybesmith.Orders (userId) VALUES (?)',
       [userId],
     );
+    const { insertId } = dataInsert;
+    return insertId;
   }
 }
 
