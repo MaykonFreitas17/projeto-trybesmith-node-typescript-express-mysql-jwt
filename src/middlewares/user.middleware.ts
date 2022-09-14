@@ -10,8 +10,6 @@ const validationUser = async (req: Request, res: Response, next: NextFunction) =
   if (password === undefined) return res.status(400).json({ message: '"password" is required' });
 
   const login = await model.login(username, password);
-
-  console.log(login);
   
   if (!login) return res.status(401).json({ message: 'Username or password invalid' });
 
