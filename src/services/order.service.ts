@@ -3,6 +3,12 @@ import OrderModel from '../models/order.model';
 import ProductModel from '../models/product.model';
 // import Order from '../interfaces/order.interface';
 
+const errors = [
+  { message: '"productsIds" is required', code: 400 },
+  { message: '"productsIds" must include only numbers', code: 422 },
+  { message: '"productsIds" must be an array', code: 422 },
+];
+
 class OrderService {
   public model: OrderModel;
 
@@ -22,6 +28,20 @@ class OrderService {
       return { id, userId, productsIds };
     });
     return Promise.all(result);
+  }
+
+  public async create(userId: number, productsIds: Array<number>) {
+    if (productsIds === undefined) return errors[0];
+    if (productsIds.length === 0) return errors[1];
+    if (typeof productsIds !== 'object') return errors[2];
+
+    const orderCreated = await this.model.create({ userId });
+
+    productsIds.forEach(async (productId: number) => {
+      await this.productModel.update(productId, orderCreated);
+    });
+
+    return { userId, productsIds };
   }
 }
 
