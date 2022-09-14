@@ -39,7 +39,7 @@ export const validationUsername = (req: Request, res: Response, next: NextFuncti
   next();
 };
 
-export const validationAmount = (req: Request, res: Response, next: NextFunction) => {
+export const validationClasse = (req: Request, res: Response, next: NextFunction) => {
   const { classe } = req.body;
   if (classe === undefined) return res.status(400).json({ message: errors[3] });
   if (typeof classe !== 'string') return res.status(422).json({ message: errors[4] });
